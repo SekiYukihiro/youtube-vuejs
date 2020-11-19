@@ -1,0 +1,6 @@
+{
+    "name": "Uncaught EvalError",
+    "version": "1.0.12.3456",
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

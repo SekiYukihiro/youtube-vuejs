@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <v-app>
+        <v-toolbar
+			dark
+            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+			style="height: 64px"
+        >
+            <v-toolbar-title>YouTube Curation</v-toolbar-title>
+        </v-toolbar>
+        <top />
+        <v-toolbar
+            dark
+            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+        >
+            <v-spacer />
+            <p>@Yukihiro</p>
+        </v-toolbar>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Top from './components/Top.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Top,
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
