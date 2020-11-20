@@ -20,7 +20,10 @@
 			<v-row>
 				<v-col
 					v-for="(item, index) in internalItems" :key="index"
-					cols="4"
+					cols="12"
+					sm="6"
+					md="4"
+					style="text-align: center"
 					draggable
 					@dragstart="dragList(index, item.id, $event)"
 					@drop="dropList(index)"
@@ -39,20 +42,27 @@
 				@dragover.prevent
 				@dragenter.prevent
 				@drop="dropTrash()"
+				width="100%"
 			>
 				<v-spacer />
-				<v-card
-					class="text-center my-10"
-					width="290"
-					style="border: outset 5px red"
+				<v-col
+					cols="12"
+					sm="6"
+					md="4"
+					style="text-align: center"
 				>
-					<v-icon
-						color="red"
-						style="font-size: 50px"
+					<v-card
+						class="text-center my-10"
+						style="border: outset 5px red"
 					>
-						mdi-trash-can
-					</v-icon>
-				</v-card>
+						<v-icon
+							color="red"
+							style="font-size: 50px"
+						>
+							mdi-trash-can
+						</v-icon>
+					</v-card>
+				</v-col>
 			</v-row>
 		</template>
     </div>

@@ -23,7 +23,7 @@
 				<v-btn
 					color="blue"
 					@click="storeMovie()"
-					style="width: 500px"
+					x-large
 				>
 					Click!
 				</v-btn>
