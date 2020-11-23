@@ -10,23 +10,37 @@
 				class="px-10"
 				style="text-align: center !important"
 			>
-				<v-text-field
-					label="動画ID"
-					v-model="movieUrl"
-					style="width: 300px"
+				<v-messages
+					:value="responseError"
+					color="red"
+					class="mb-5"
 				/>
-				<v-text-field
-					label="コメント"
-					v-model="comment"
-					style="width: 500px"
-				/>
-				<v-btn
-					color="blue"
-					@click="storeMovie()"
-					x-large
+				<v-form
+					ref="form"
 				>
-					Click!
-				</v-btn>
+					<v-text-field
+						label="YouTube動画ID"
+						v-model="movieUrl"
+						:rules="movieUrlRules"
+						placeholder="動画URLの【v= 】の後に続く英数字"
+						style="width: 300px"
+					/>
+					<v-text-field
+						label="コメント"
+						v-model="comment"
+						:rules="commentRules"
+						placeholder="動画紹介のための任意のコメント"
+						class="mb-5"
+						style="width: 500px"
+					/>
+					<v-btn
+						color="blue"
+						@click="storeMovie"
+						x-large
+					>
+						Click!
+					</v-btn>
+				</v-form>
 			</v-container>
 		</v-sheet>
         <movie
@@ -53,6 +67,16 @@ export default {
     return {
         movieUrl: "",
         comment: "",
+		movieUrlRules: [
+			v => (v && !!v) || '入力してください',
+			v => v.length === 11 || '11文字で入力してください',
+			v => /^[0-9a-zA-Z]*$/.test(v) || '半角英数字で入力してください',
+		],
+		commentRules: [
+			v => (v && !!v) || '入力してください',
+			v => v.length <= 16 || '16文字以内で入力してください',
+		],
+		responseError: [],
         items: [{}],
         aaa: [{}],
         formData: {
@@ -73,18 +97,21 @@ export default {
 
   methods: {
     async storeMovie () {
-        await axios
-            .post("https://youtube-curation.herokuapp.com/rest", {
-                url: this.movieUrl,
-                comment: this.comment,
-            })
-            .then((response) => {
-                console.log(response.data)
-				this.getMovies()
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+		if (this.$refs.form.validate()) {
+			await axios
+				.post("https://youtube-curation.herokuapp.com/rest", {
+					url: this.movieUrl,
+					comment: this.comment,
+				})
+				.then(() => {
+					this.responseError = []
+					this.getMovies()
+				})
+				.catch((error) => {
+					this.responseError = ['動画の投稿に失敗しました']
+					console.log(error)
+				})
+		}
     },
     async getMovies () {
 		this.loading = true
