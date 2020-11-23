@@ -1,15 +1,26 @@
 <template>
   <div class="about">
-	<tiny-mce
-		id="id"
-		value="value"
-    />
+	<v-btn
+		@click="switchTab"
+	>
+		switch
+	</v-btn>
+	<keep-alive>
+		<component
+			:id="id"
+			ref="rich"
+			:is="tab"
+			:key="key"
+			:value="value"
+			@parentMethod="parentMethod"
+		/>
+	</keep-alive>
 	<v-app id="dialog">
 		<v-dialog
 			v-model="dialog"
 			width="500"
 			:retain-focus="false"
-			eager="true"
+			eager
 		>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn
@@ -65,10 +76,30 @@
 			return {
 				id: 'About',
 				value: 'About',
+				tab: 'TinyMce',
+				key: 0,
 				dialogId: 'Dialog',
 				dialogValue: 'Dialog',
 				dialog: false,
 			}
-		}
+		},
+		methods: {
+			switchTab () {
+				if (this.tab !== 'TinyMce') {
+					this.id = 'aaaa'
+					this.tab = 'TinyMce'
+					this.key = 1
+					return
+				}
+				this.key = 2
+				this.$refs.rich.switchTab()
+				this.id = 'VBtn'
+				this.tab = 'VBtn'
+			},
+			parentMethod (value) {
+				this.value = value
+				console.log(this.value)	
+			}
+		},
 	}
 </script>
